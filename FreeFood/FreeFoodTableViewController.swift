@@ -19,6 +19,7 @@ class FreeFoodTableViewController: UITableViewController,XMLParserDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "부산 무료 급식소"
         
         let fileManager = FileManager.default
         let url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("data.plist")
@@ -48,8 +49,10 @@ class FreeFoodTableViewController: UITableViewController,XMLParserDelegate {
     }
     
     func getList() {
-        //let str = detailEndPoint + "?serviceKey=\(servieKey)&numsofRows=10"
-        let str = listEndPoint + "?serviceKey=\(servieKey)&numsofRows=10"
+        //let str = detailEndPoint + "?serviceKey=\(servieKey)&numsofRows=20"
+        let str = listEndPoint + "?serviceKey=\(servieKey)&numOfRows=20"
+        
+        print(str)
         
         if let url = URL(string: str) {
             if let parser = XMLParser(contentsOf: url) {
@@ -129,7 +132,8 @@ class FreeFoodTableViewController: UITableViewController,XMLParserDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RE", for: indexPath)
         
         let dic = items[indexPath.row]
-        cell.textLabel?.text = dic["name"]
+        cell.textLabel?.text = dic["loc"]
+        cell.detailTextLabel?.text = dic["addr"]
 
         return cell
     }
